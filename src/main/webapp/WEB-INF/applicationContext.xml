@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/mvc
+							http://www.springframework.org/schema/mvc/spring-mvc.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd
+							http://mybatis.org/schema/mybatis-spring
+							http://mybatis.org/schema/mybatis-spring.xsd
+							http://www.springframework.org/schema/util
+                     		http://www.springframework.org/schema/util/spring-util-3.2.xsd  ">
+
+	<!---->
+	<!-- mybatis:scan会将XXX.XXX.mapper包里的所有接口当作mapper配置，之后可以自动引入mapper类
+	<mybatis:scan base-package="sds.db.mapper" />-->
+	<mybatis:scan base-package="sds.db.mapper" />
+
+	<!-- 扫描XXXX。XXXX包下面的java文件，有spring的相关注解类，则把这些类注册为spring的bean	-->
+	<context:component-scan base-package="com.dl" />
+
+	<!-- 配置c3p0 数据源 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"/> -->
+
+	<!-- 导入数据库配置文件-->
+	<util:properties id="myproperties" location="/WEB-INF/db.properties">
+	</util:properties>
+
+	<!-- 创建数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 定义数据库连接的参数 -->
+		<property name="driverClass" value="#{myproperties.driverClass}"></property>
+		<property name="jdbcUrl" value="#{myproperties.jdbcUrl}"></property>
+		<property name="user" value="#{myproperties.user}"></property>
+		<property name="password" value="#{myproperties.password}"></property>
+		<!-- 数据库连接池的两个属性 -->
+		<property name="initialPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="20"></property>
+	</bean>
+
+
+	<!-- 配置SqlSessionFactory,org.mybatis.spring.SqlSessionFactoryBean 是Mybatis社区开发用于整合Spring的bean
+		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"/> -->
+	<!-- MyBatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath*:sds/db/xml/*Mapper.xml
+				</value>
+			</array>
+		</property>
+		<!-- mybatis配置文件路径 <property name="configLocation" value="classpath:/mybatisConfig/config.xml"/> -->
+	</bean>
+
+	<!-- JDBC事物管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+
+	<!-- 启用支持annotation注解方式事物管理 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

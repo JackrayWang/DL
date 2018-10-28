@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<!-- spring可以自动去扫描base-pack下面的包或者子包下面的java文件， 如果扫描到spring的相关注解的类，则把这些类注册为spring的bean -->
+	<context:component-scan base-package="com.dl" />
+	<!--1 配置annotation类型的处理映射器 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
+	<!--2 配置annotation类型的处理器适配器 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> -->
+	<!--3 视图解析器 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/> -->
+	<!-- 以上是在springmvc 框架在运行的过程中的一个 先后顺序 -->
+
+	<!-- 设置配置方案 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<!-- 使用默认的servlet来响应静态文件 -->
+	<mvc:default-servlet-handler />
+
+	<mvc:cors>
+        <mvc:mapping path="/**/**" 
+        allowed-origins="*" 
+        allow-credentials="true" 
+        max-age="1800"
+        allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"/>
+    </mvc:cors>
+    
+	<!-- 文件上传bean -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<!-- 配置视图解析器 -->
+	<bean id="InternalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 因为在运行的过程中可能会遇到名字相同的文件 所以要精确定位文件所在的位置（前缀）和文件的属性（后缀）所以有了以下两个部分 前缀和后缀 -->
+		<!-- 前缀
+		<property name="prefix"> <value>/jsp/</value> </property>-->
+		<!-- 后缀
+		<property name="suffix"> <value>.jsp</value> </property>-->
+	</bean>
+</beans>

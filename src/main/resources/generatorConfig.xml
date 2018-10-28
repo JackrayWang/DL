@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="D:\mysqldriver\mysql-connector-java-5.1.26.jar" />
+	<context id="context1" targetRuntime="MyBatis3">
+		<commentGenerator type="org.improve4meaven.generator.MyCommentGenerator">
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/dl?characterEncoding=utf8&amp;useSSL=true&amp;createDatabaseIfNotExist=true&amp;serverTimezone=GMT&amp;nullNamePatternMatchesAll=true"
+			userId="root" password="wang" >
+			<property name="useInformationSchema" value="true"></property>
+			</jdbcConnection>
+
+		<javaModelGenerator targetPackage="sds.db.dao"
+			targetProject="src/main/java" />
+
+		<sqlMapGenerator targetPackage="xml" targetProject="src/main/resources" />
+
+		<javaClientGenerator targetPackage="sds.db.mapper"
+			targetProject="src/main/java" type="XMLMAPPER" >
+			 <property name="enableSubPackages" value="true"/>
+			 </javaClientGenerator>
+
+		<!-- user -->
+		<table schema="dl" tableName="user" domainObjectName="User"
+	  			enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+		</table>
+
+		<table schema="dl" tableName="role" domainObjectName="Role"
+	  			enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+		</table>
+
+		<table schema="dl" tableName="roleitem" domainObjectName="Roleitem"
+	  			enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+		</table>
+
+	</context>
+</generatorConfiguration>
