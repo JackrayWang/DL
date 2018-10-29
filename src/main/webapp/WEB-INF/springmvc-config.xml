@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 	<!-- spring可以自动去扫描base-pack下面的包或者子包下面的java文件， 如果扫描到spring的相关注解的类，则把这些类注册为spring的bean -->
-	<context:component-scan base-package="com.dl" />
+	<context:component-scan base-package="com.spring" />
 	<!--1 配置annotation类型的处理映射器 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
 	<!--2 配置annotation类型的处理器适配器 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> -->
 	<!--3 视图解析器 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/> -->
@@ -23,13 +23,13 @@
 	<mvc:default-servlet-handler />
 
 	<mvc:cors>
-        <mvc:mapping path="/**/**" 
-        allowed-origins="*" 
-        allow-credentials="true" 
+        <mvc:mapping path="/**/**"
+        allowed-origins="*"
+        allow-credentials="true"
         max-age="1800"
         allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"/>
     </mvc:cors>
-    
+
 	<!-- 文件上传bean -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	<!-- 配置视图解析器 -->

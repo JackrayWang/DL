@@ -20,7 +20,7 @@
 	<!---->
 	<!-- mybatis:scan会将XXX.XXX.mapper包里的所有接口当作mapper配置，之后可以自动引入mapper类
 	<mybatis:scan base-package="sds.db.mapper" />-->
-	<mybatis:scan base-package="sds.db.mapper" />
+	<mybatis:scan base-package="com.spring" />
 
 	<!-- 扫描XXXX。XXXX包下面的java文件，有spring的相关注解类，则把这些类注册为spring的bean	-->
 	<context:component-scan base-package="com.dl" />

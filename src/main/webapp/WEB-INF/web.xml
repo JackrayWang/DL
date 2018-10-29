@@ -5,15 +5,31 @@
 
 	<display-name>Archetype Created Web Application</display-name>
 
+	 <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>/WEB-INF/log4j2.xml</param-value>
+    </context-param>
+<!--
+	<context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>6000</param-value>
+    </context-param>
+ -->
+ 	<listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+
 	<!-- 配置spring核心监听器 默认会以 WEB—INF/applicationContext.xml作为配置文件 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
 	<!-- contextConfigLocation参数用来指定Spring的配置文件-->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param>
+
 
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
@@ -58,13 +74,15 @@
 		<url-pattern>*.js</url-pattern>
 	</servlet-mapping>-->
 
-	<!-- 设置欢迎界面 
-	
+	<!-- 设置欢迎界面
+
 	<filter-mapping>
 		<filter-name>CorsFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>-->
-	
+	<!-- 在WEB项目中使用log4j2需要在web.xml文件中配置如下的监听器和过滤器 -->
+
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
